@@ -215,9 +215,9 @@ export default {
     addNewWork(e) {
       e.stopImmediatePropagation();
 
-      this.newInProgress === true
-        ? (this.newEndYear = 0)
-        : (this.newEndYear = null);
+      if (this.newInProgress === true) {
+        this.newEndYear = 0;
+      }
 
       if (
         !this.newEmployer ||

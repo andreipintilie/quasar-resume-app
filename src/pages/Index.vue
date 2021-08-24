@@ -137,13 +137,16 @@ export default defineComponent({
         this.$store.state.workModule.work
       );
       if (
-        !this.$store.state.educationModule.education ||
-        !this.$store.state.workModule.work
-      )
-        return this.$q.notify({
+        this.$store.state.educationModule.education.length === 0 ||
+        this.$store.state.workModule.work.length === 0
+      ) {
+        this.$q.notify({
           type: "negative",
           message: "You have to fill in all the fields.",
         });
+        return;
+      }
+      this.step = 3;
     },
   },
 });
