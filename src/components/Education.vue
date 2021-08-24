@@ -155,7 +155,7 @@
                 v-model="newStartYear"
               />
             </div>
-            <div class="col text-right">
+            <div v-show="newInProgress === false" class="col text-right">
               <q-input
                 type="number"
                 style="max-width: 100px"
@@ -213,6 +213,10 @@ export default {
     },
     addNewEducation(e) {
       e.stopImmediatePropagation();
+
+      this.newInProgress === true
+        ? (this.newEndYear = 0)
+        : (this.newEndYear = null);
 
       if (
         !this.newUniversity ||

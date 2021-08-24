@@ -94,7 +94,7 @@
                 label="Start year"
               />
             </div>
-            <div v-if="inProgress === false" class="col text-right">
+            <div v-show="inProgress === false" class="col text-right">
               <q-input
                 v-model="endYear"
                 type="number"
@@ -214,6 +214,10 @@ export default {
     },
     addNewWork(e) {
       e.stopImmediatePropagation();
+
+      this.newInProgress === true
+        ? (this.newEndYear = 0)
+        : (this.newEndYear = null);
 
       if (
         !this.newEmployer ||

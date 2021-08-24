@@ -34,7 +34,11 @@
           <education></education>
 
           <q-stepper-navigation>
-            <q-btn @click="step = 3" color="primary" label="Continue" />
+            <q-btn
+              @click="slideToProjectsAndHighlights"
+              color="primary"
+              label="Continue"
+            />
             <q-btn
               flat
               @click="step = 1"
@@ -126,6 +130,20 @@ export default defineComponent({
           message: "You have to fill in all the fields.",
         });
       this.step = 2;
+    },
+    slideToProjectsAndHighlights() {
+      console.log(
+        this.$store.state.educationModule.education,
+        this.$store.state.workModule.work
+      );
+      if (
+        !this.$store.state.educationModule.education ||
+        !this.$store.state.workModule.work
+      )
+        return this.$q.notify({
+          type: "negative",
+          message: "You have to fill in all the fields.",
+        });
     },
   },
 });
