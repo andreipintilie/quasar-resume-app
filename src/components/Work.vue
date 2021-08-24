@@ -18,6 +18,7 @@
           Position:
           <span class="text-black">{{ work.position }}</span></q-item-label
         >
+
         <q-item-label caption class="text-subtitle2">
           Description:
           <span class="text-black">{{ work.description }}</span></q-item-label
