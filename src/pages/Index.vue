@@ -13,7 +13,6 @@
           <q-stepper-navigation>
             <q-btn
               @click="slideToWorkAndEducation"
-              @dblclick="step = 2"
               color="primary"
               label="Continue"
             />
