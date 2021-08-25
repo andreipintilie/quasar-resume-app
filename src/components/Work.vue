@@ -7,8 +7,11 @@
       size="xs"
       icon="add"
       round
-      title="Add education"
-    ></q-btn>
+    >
+      <q-tooltip class="bg-black text-body2" :offset="[10, 10]">
+        Add work
+      </q-tooltip></q-btn
+    >
   </div>
   <div v-if="$store.state.workModule.work.length > 0">
     <q-item v-for="(work, idx) in $store.state.workModule.work" :key="idx">
@@ -32,14 +35,22 @@
           }}</span></q-item-label
         >
         <q-item-label class="q-pt-sm">
-          <q-btn @click="editItem(work.id)" size="sm" icon="edit" round></q-btn>
+          <q-btn @click="editItem(work.id)" size="sm" icon="edit" round
+            ><q-tooltip class="bg-black text-body2" :offset="[10, 10]">
+              Edit Job
+            </q-tooltip></q-btn
+          >
           <q-btn
             @click="deleteWorkElement(work.id)"
             class="q-ml-md"
             size="sm"
             icon="delete"
             round
-          ></q-btn>
+          >
+            <q-tooltip class="bg-black text-body2" :offset="[10, 10]">
+              Remove Job
+            </q-tooltip>
+          </q-btn>
         </q-item-label>
       </q-item-section>
       <q-item-section side top>

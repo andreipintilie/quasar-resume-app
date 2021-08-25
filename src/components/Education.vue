@@ -7,8 +7,11 @@
       size="xs"
       icon="add"
       round
-      title="Add education"
-    ></q-btn>
+    >
+      <q-tooltip class="bg-black text-body2" :offset="[10, 10]">
+        Add education
+      </q-tooltip></q-btn
+    >
   </div>
   <div v-if="$store.state.educationModule.education.length > 0">
     <q-item
@@ -27,19 +30,22 @@
           >Period: {{ school.start_year }} – {{ school.end_year }}</q-item-label
         >
         <q-item-label class="q-pt-sm">
-          <q-btn
-            @click="editItem(school.id)"
-            size="sm"
-            icon="edit"
-            round
-          ></q-btn>
+          <q-btn @click="editItem(school.id)" size="sm" icon="edit" round>
+            <q-tooltip class="bg-black text-body2" :offset="[10, 10]">
+              Edit School
+            </q-tooltip>
+          </q-btn>
           <q-btn
             @click="removeEducationItem(school.id)"
             class="q-ml-md"
             size="sm"
             icon="delete"
             round
-          ></q-btn>
+          >
+            <q-tooltip class="bg-black text-body2" :offset="[10, 10]">
+              Remove School
+            </q-tooltip>
+          </q-btn>
         </q-item-label>
       </q-item-section>
       <q-item-section side top>

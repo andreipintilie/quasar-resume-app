@@ -50,11 +50,11 @@
 
         <q-step
           :name="3"
-          title="Projects & Highlights"
+          title="Projects (Optional)"
           icon="folder"
           :done="step > 3"
         >
-          hi there!
+          <projects></projects>
 
           <q-stepper-navigation>
             <q-btn @click="step = 4" color="primary" label="Continue" />
@@ -99,6 +99,7 @@ import { useQuasar } from "quasar";
 import PersonalInfo from "../components/PersonalInfo.vue";
 import Education from "../components/Education.vue";
 import Work from "../components/Work.vue";
+import Projects from "../components/Projects.vue";
 
 export default defineComponent({
   name: "PageIndex",
@@ -106,6 +107,7 @@ export default defineComponent({
     PersonalInfo,
     Education,
     Work,
+    Projects,
   },
   data() {
     return {
@@ -131,10 +133,6 @@ export default defineComponent({
       this.step = 2;
     },
     slideToProjectsAndHighlights() {
-      console.log(
-        this.$store.state.educationModule.education,
-        this.$store.state.workModule.work
-      );
       if (
         this.$store.state.educationModule.education.length === 0 ||
         this.$store.state.workModule.work.length === 0

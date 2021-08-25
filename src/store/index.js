@@ -3,6 +3,7 @@ import { createStore } from "vuex";
 import personalInfoModule from "./personal-info-module";
 import educationModule from "./education-module";
 import workModule from "./work-module";
+import projectsModule from "./projects-module";
 
 // import example from './module-example'
 
@@ -12,6 +13,7 @@ export default store(function (/* { ssrContext } */) {
       personalInfoModule,
       educationModule,
       workModule,
+      projectsModule,
     },
     strict: process.env.DEBUGGING,
   });
