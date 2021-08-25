@@ -27,8 +27,16 @@ export function setDescription(state, payload) {
   state.work[state.clickedWork].description = payload;
 }
 
+export function setStartMonth(state, payload) {
+  state.work[state.clickedWork].start_month = payload;
+}
+
 export function setStartYear(state, payload) {
   state.work[state.clickedWork].start_year = payload;
+}
+
+export function setEndMonth(state, payload) {
+  state.work[state.clickedWork].end_month = payload;
 }
 
 export function setEndYear(state, payload) {

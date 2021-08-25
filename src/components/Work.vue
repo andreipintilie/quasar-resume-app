@@ -27,9 +27,8 @@
           >Period:
           <span class="text-black">{{
             work.in_progress === false
-              ? `${work.start_year} –
-            ${work.end_year}`
-              : `In Progress (since: ${work.start_year})`
+              ? `${work.start_month} ${work.start_year} – ${work.end_month} ${work.end_year}`
+              : `In Progress (since: ${work.start_month} ${work.start_year})`
           }}</span></q-item-label
         >
         <q-item-label class="q-pt-sm">
@@ -88,6 +87,12 @@
           <div class="row">
             <div class="col">
               <q-input
+                v-model="startMonth"
+                type="string"
+                style="max-width: 100px"
+                label="Start month"
+              />
+              <q-input
                 v-model="startYear"
                 type="number"
                 style="max-width: 100px"
@@ -95,6 +100,12 @@
               />
             </div>
             <div v-show="inProgress === false" class="col text-right">
+              <q-input
+                v-model="endMonth"
+                type="string"
+                style="max-width: 100px"
+                label="End month"
+              />
               <q-input
                 v-model="endYear"
                 type="number"
@@ -150,6 +161,12 @@
           <div class="row">
             <div class="col">
               <q-input
+                v-model="newStartMonth"
+                type="string"
+                style="max-width: 100px"
+                label="Start month"
+              />
+              <q-input
                 type="number"
                 style="max-width: 100px"
                 label="Start year"
@@ -157,6 +174,12 @@
               />
             </div>
             <div v-if="newInProgress === false" class="col text-right">
+              <q-input
+                v-model="newEndMonth"
+                type="string"
+                style="max-width: 100px"
+                label="End month"
+              />
               <q-input
                 type="number"
                 style="max-width: 100px"
@@ -198,7 +221,9 @@ export default {
       newEmployer: null,
       newPosition: null,
       newDescription: null,
+      newStartMonth: null,
       newStartYear: null,
+      newEndMonth: null,
       newEndYear: null,
       newInProgress: false,
     };
@@ -216,6 +241,7 @@ export default {
       e.stopImmediatePropagation();
 
       if (this.newInProgress === true) {
+        this.newEndMonth = "";
         this.newEndYear = 0;
       }
 
@@ -223,7 +249,9 @@ export default {
         !this.newEmployer ||
         !this.newPosition ||
         !this.newDescription ||
+        !this.newStartMonth ||
         !this.newStartYear ||
+        (!this.newEndMonth && this.newInProgress === false) ||
         (!this.newEndYear && this.newInProgress === false)
       ) {
         this.$q.notify({
@@ -238,7 +266,9 @@ export default {
         this.newEmployer.length < 4 ||
         this.newPosition.length < 4 ||
         this.newDescription.length < 4 ||
+        this.newStartMonth.length < 4 ||
         this.newStartYear.length < 4 ||
+        (this.newEndMonth.length < 4 && this.newInProgress === false) ||
         (this.newEndYear.length < 4 && this.newInProgress === false)
       ) {
         this.$q.notify({
@@ -263,14 +293,18 @@ export default {
         employer: this.newEmployer,
         position: this.newPosition,
         description: this.newDescription,
+        start_month: this.newStartMonth,
         start_year: this.newStartYear,
+        end_month: this.newEndMonth,
         end_year: this.newEndYear,
         in_progress: this.newInProgress,
       });
       this.newEmployer = null;
       this.newPosition = null;
       this.newDescription = null;
+      this.newStartMonth = null;
       this.newStartYear = null;
+      this.newEndMonth = null;
       this.newEndYear = null;
       this.newInProgress = false;
     },
@@ -300,12 +334,28 @@ export default {
         this.$store.commit("workModule/setDescription", payload);
       },
     },
+    startMonth: {
+      get() {
+        return this.$store.state.workModule.work[this.clicked].start_month;
+      },
+      set(payload) {
+        this.$store.commit("workModule/setStartMonth", payload);
+      },
+    },
     startYear: {
       get() {
         return this.$store.state.workModule.work[this.clicked].start_year;
       },
       set(payload) {
         this.$store.commit("workModule/setStartYear", payload);
+      },
+    },
+    endMonth: {
+      get() {
+        return this.$store.state.workModule.work[this.clicked].end_month;
+      },
+      set(payload) {
+        this.$store.commit("workModule/setEndMonth", payload);
       },
     },
     endYear: {
