@@ -10,3 +10,23 @@ export function removeProject(state, payload) {
     }
   }
 }
+
+export function setClickedProject(state, payload) {
+  state.clickedProject = payload;
+}
+
+export function setProjectTitle(state, payload) {
+  state.projects[state.clickedProject].title = payload;
+}
+
+export function setProjectDescription(state, payload) {
+  state.projects[state.clickedProject].description = payload;
+}
+
+export function setProjectLink(state, payload) {
+  state.projects[state.clickedProject].link = payload;
+}
+
+export function setProjectDemoLink(state, payload) {
+  state.projects[state.clickedProject].demo_link = payload;
+}

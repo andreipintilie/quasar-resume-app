@@ -25,7 +25,11 @@
                 }}</a>
               </div>
               <div class="q-mt-md q-pb-lg">
-                <q-btn size="sm" icon="edit" round
+                <q-btn
+                  @click="editProject(project.id)"
+                  size="sm"
+                  icon="edit"
+                  round
                   ><q-tooltip class="bg-black text-body2" :offset="[10, 10]">
                     Edit Project
                   </q-tooltip></q-btn
@@ -76,6 +80,54 @@
       </div>
     </div>
   </div>
+  <!-- dialog edit project start -->
+  <q-dialog v-model="promptChange">
+    <q-card style="min-width: 350px">
+      <q-card-section>
+        <div class="text-h6">
+          Edit:
+          {{ $store.state.projectsModule.projects[this.clicked].title }}
+        </div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        <q-form class="q-gutter-md">
+          <q-input
+            v-model="projectTitle"
+            label="Project Title"
+            autofocus
+            @keyup.enter="promptChange = false"
+          />
+
+          <q-input
+            v-model="projectDescription"
+            label="Project Description"
+            autofocus
+            @keyup.enter="promptChange = false"
+          />
+
+          <q-input
+            v-model="projectLink"
+            label="Project Link"
+            autofocus
+            @keyup.enter="promptChange = false"
+          />
+
+          <q-input
+            v-model="projectDemoLink"
+            label="Live Demo Link"
+            autofocus
+            @keyup.enter="promptChange = false"
+          />
+        </q-form>
+      </q-card-section>
+
+      <q-card-actions align="right" class="text-primary">
+        <q-btn flat label="Close" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+  <!-- dialog edit project end -->
 </template>
 
 <script>
@@ -88,6 +140,7 @@ export default {
     return {
       $store: useStore(),
       $q: useQuasar(),
+      promptChange: false,
       newTitle: "",
       newDescription: "",
       newLink: "",
@@ -113,6 +166,21 @@ export default {
           message: "You have type in at least 3 characters!",
         });
 
+      if (!this.newLink.match(/[https?]|[www]/g))
+        return this.$q.notify({
+          type: "negative",
+          message: "The project link is invalid!",
+        });
+
+      if (
+        this.newDemoLink.length > 0 &&
+        !this.newDemoLink.match(/[https?]|[www]/g)
+      )
+        return this.$q.notify({
+          type: "negative",
+          message: "The live demo link is invalid!",
+        });
+
       this.$q.notify({
         type: "positive",
         message: "Project added successfully!",
@@ -134,10 +202,51 @@ export default {
     deleteProject(id) {
       this.$store.commit("projectsModule/removeProject", id);
     },
+    editProject(payload) {
+      this.$store.commit("projectsModule/setClickedProject", payload);
+      this.promptChange = true;
+    },
   },
   computed: {
     getAllProjects() {
       return this.$store.getters["projectsModule/getAllProjects"];
+    },
+    clicked() {
+      return this.$store.getters["projectsModule/getClickedProject"];
+    },
+    projectTitle: {
+      get() {
+        return this.$store.state.projectsModule.projects[this.clicked].title;
+      },
+      set(payload) {
+        this.$store.commit("projectsModule/setProjectTitle", payload);
+      },
+    },
+    projectDescription: {
+      get() {
+        return this.$store.state.projectsModule.projects[this.clicked]
+          .description;
+      },
+      set(payload) {
+        this.$store.commit("projectsModule/setProjectDescription", payload);
+      },
+    },
+    projectLink: {
+      get() {
+        return this.$store.state.projectsModule.projects[this.clicked].link;
+      },
+      set(payload) {
+        this.$store.commit("projectsModule/setProjectLink", payload);
+      },
+    },
+    projectDemoLink: {
+      get() {
+        return this.$store.state.projectsModule.projects[this.clicked]
+          .demo_link;
+      },
+      set(payload) {
+        this.$store.commit("projectsModule/setProjectDemoLink", payload);
+      },
     },
   },
 };
