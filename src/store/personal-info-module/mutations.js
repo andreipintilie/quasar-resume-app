@@ -30,3 +30,7 @@ export function setLocation(state, payload) {
 export function setWebsite(state, payload) {
   state.website = payload;
 }
+
+export function setGithub(state, payload) {
+  state.github = payload;
+}

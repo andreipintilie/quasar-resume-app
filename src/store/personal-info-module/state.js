@@ -18,6 +18,7 @@ export default function () {
     phone: "0000000000",
     location: "Timisoara, Romania",
     website: "https://andreipintilie.dev",
+    github: "https://github.com/andreipintilie",
     prompt: false,
   };
 }

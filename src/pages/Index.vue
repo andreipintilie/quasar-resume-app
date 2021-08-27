@@ -69,10 +69,10 @@
         </q-step>
 
         <q-step :name="4" title="Preview & Download" icon="save_alt">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, omnis.
+          <resume></resume>
 
           <q-stepper-navigation>
-            <q-btn color="primary" label="Finish" />
+            <q-btn @click="getPDF" color="primary" label="Get PDF" />
             <q-btn
               flat
               @click="step = 3"
@@ -93,13 +93,14 @@ import { defineComponent } from "vue";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
-// import VueHtml2pdf from 'vue-html2pdf';
+import html2pdf from "html2pdf.js";
 
 // Components
 import PersonalInfo from "../components/PersonalInfo.vue";
 import Education from "../components/Education.vue";
 import Work from "../components/Work.vue";
 import Projects from "../components/Projects.vue";
+import Resume from "../components/Resume.vue";
 
 export default defineComponent({
   name: "PageIndex",
@@ -108,6 +109,7 @@ export default defineComponent({
     Education,
     Work,
     Projects,
+    Resume,
   },
   data() {
     return {
@@ -145,6 +147,24 @@ export default defineComponent({
       }
       this.step = 3;
     },
+    getPDF() {
+      const element = document.getElementById("resume");
+      const opt = {
+        margin: 1,
+        filename: "myfile.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      };
+      html2pdf().from(element).set(opt).save();
+    },
   },
 });
 </script>
+
+<style lang="scss" scoped>
+#q-stepper {
+  width: 70% !important;
+  max-width: 70% !important;
+}
+</style>

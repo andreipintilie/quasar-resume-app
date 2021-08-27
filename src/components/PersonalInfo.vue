@@ -35,7 +35,12 @@
       <q-input
         v-model="website"
         label="Website"
-        hint="Personal Website, Github, etc..."
+        lazy-rules
+        :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+      />
+      <q-input
+        v-model="github"
+        label="Github (Optional)"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
@@ -105,6 +110,14 @@ export default {
       },
       set(payload) {
         this.$store.commit("personalInfoModule/setWebsite", payload);
+      },
+    },
+    github: {
+      get() {
+        return this.$store.state.personalInfoModule.github;
+      },
+      set(payload) {
+        this.$store.commit("personalInfoModule/setGithub", payload);
       },
     },
   },
