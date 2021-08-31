@@ -1,0 +1,126 @@
+<template>
+  <div id="resume">
+    <div class="text-h6">
+      Click here to download your CV:
+
+      <q-btn
+        color="primary"
+        icon="download"
+        size="sm"
+        class="q-ml-xs q-pa-sm"
+        round
+        @click="getPDF"
+      ></q-btn>
+    </div>
+  </div>
+  <!-- <div class="text-h6">Work History</div>
+    <q-timeline
+      color="secondary"
+      class="q-px-lg q-pb-md"
+      v-for="work in $store.state.workModule.work"
+      v-bind:key="work.id"
+    >
+      <q-timeline-entry
+        :title="work.employer"
+        :subtitle="
+          work.in_progress === false
+            ? `${work.start_month} ${work.start_year} - ${work.end_month} ${work.end_year}`
+            : `In Progress (Since: ${work.start_month} ${work.start_year})`
+        "
+        color="primary"
+        icon="list"
+        :body="work.description"
+      />
+      <div class="q-timeline-border"></div>
+    </q-timeline> -->
+</template>
+
+<script>
+import { useStore } from "vuex";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+// import html2pdf from "html2pdf.js";
+
+export default {
+  name: "Resume",
+  data() {
+    return {
+      $store: useStore(),
+      docDefinition: {
+        content: [
+          {
+            columns: [
+              {
+                width: "33.33%",
+                text: `${this.$store.state.personalInfoModule.location}\n${this.$store.state.personalInfoModule.github}`,
+                fontSize: 9,
+              },
+              {
+                width: "33.33%",
+                text: `${this.$store.state.personalInfoModule.firstname}\n${this.$store.state.personalInfoModule.lastname}`,
+                style: { alignment: "center" },
+                fontSize: 12,
+                characterSpacing: 2,
+                bold: true,
+              },
+              {
+                width: "33.33%",
+                text: `${this.$store.state.personalInfoModule.phone}\n${this.$store.state.personalInfoModule.website}`,
+                style: { alignment: "right" },
+                fontSize: 9,
+                canvas: {
+                  type: "line",
+                  x1: 390,
+                  y1: -35,
+                  x2: 510,
+                  y2: -35,
+                  lineWidth: 1,
+                }, //Bottom line
+              },
+            ],
+          },
+          {
+            margin: [0, 10],
+            fontSize: 9,
+            bold: true,
+            text: "EMPLOYMENT",
+          },
+        ],
+      },
+    };
+  },
+  methods: {
+    getPDF() {
+      pdfMake.createPdf(this.docDefinition).open();
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+#resume {
+  * {
+    font-family: "Open Sans", sans-serif;
+  }
+
+  a {
+    color: #375fff;
+  }
+
+  .section-heading {
+    text-transform: uppercase;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+  }
+}
+
+.q-timeline {
+  margin-inline: auto;
+  width: 50% !important;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+</style>

@@ -81,27 +81,6 @@
         </p>
       </li>
     </ul>
-
-    <!-- <div class="text-h6">Work History</div>
-    <q-timeline
-      color="secondary"
-      class="q-px-lg q-pb-md"
-      v-for="work in $store.state.workModule.work"
-      v-bind:key="work.id"
-    >
-      <q-timeline-entry
-        :title="work.employer"
-        :subtitle="
-          work.in_progress === false
-            ? `${work.start_month} ${work.start_year} - ${work.end_month} ${work.end_year}`
-            : `In Progress (Since: ${work.start_month} ${work.start_year})`
-        "
-        color="primary"
-        icon="list"
-        :body="work.description"
-      />
-      <div class="q-timeline-border"></div>
-    </q-timeline> -->
   </div>
 </template>
 

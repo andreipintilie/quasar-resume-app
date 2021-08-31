@@ -12,13 +12,13 @@
 
 export default function () {
   return {
-    firstname: "Andrei",
-    lastname: "Pintilie",
-    email: "andrei.pintilie00@e-uvt.ro",
-    phone: "0000000000",
-    location: "Timisoara, Romania",
-    website: "https://andreipintilie.dev",
-    github: "https://github.com/andreipintilie",
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    location: "",
+    website: "",
+    github: "",
     prompt: false,
   };
 }
